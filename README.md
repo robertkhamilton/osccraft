@@ -6,7 +6,7 @@ Minecraft modded with osc output
 
 --- --- --- --- --- --- --- --- --- ---
 
-  v0.0.1 
+  v0.0.1 (tag: "v0.0.1")
 
 	- initial release of osccraft
 	- outputs player position data and block hit/destroyed events
