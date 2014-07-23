@@ -1,5 +1,15 @@
 package osccraft;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+
 //import oscP5.OscP5;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -23,6 +33,11 @@ public class Osccraft {
         @Instance(value = "OsccraftModID")
         public static Osccraft instance;
         
+        // Custom OSC block class
+        public static Block oscDirt;
+        public static Block oscRock;
+        public static CreativeTabs tabOsccraft = new OscCreativeTabs("OSCCraft");
+        
         // Says where the client and server 'proxy' code is loaded.
         @SidedProxy(clientSide="osccraft.client.ClientProxy", serverSide="osccraft.CommonProxy")
         public static CommonProxy proxy;
@@ -30,7 +45,10 @@ public class Osccraft {
         @EventHandler // used in 1.6.2
         //@PreInit    // used in 1.5.2
         public void preInit(FMLPreInitializationEvent event) {
-                // Stub Method        	        	
+
+        	// init custom blocks for this mod
+        	this.initBlocks();
+        	
         }
         
         @EventHandler // used in 1.6.2
@@ -48,6 +66,48 @@ public class Osccraft {
 
         	// but some are on the FML bus:
         	//FMLCommonHandler.instance().bus().register(new OscPlayerEventHandler());
+        	
+        }
+        
+        private void initBlocks()
+        {
+        	
+        	initBlockOscDirt();
+        	initBlockOscRock();
+        	
+        	proxy.registerRenderers();       
+        }
+        
+        private void initBlockOscDirt()
+        {
+        	// initialize osc-emitting "dirt" block
+            oscDirt = new OscBlock(Material.ground)
+            		.setHardness(0.5F)
+            		.setStepSound(Block.soundTypeGravel)
+            		.setBlockName("OscDirt")
+            		.setBlockTextureName("dirt");            		            	
+      
+            oscDirt.setHarvestLevel("shovel", 0);                                 
+            
+            GameRegistry.registerBlock(	oscDirt, oscDirt.getUnlocalizedName().substring(5));
+
+                    	
+        }
+        
+        private void initBlockOscRock()
+        {
+        	// initialize osc-emitting "dirt" block
+        	oscRock = new OscBlock(Material.rock)
+            		.setHardness(0.5F)
+            		.setStepSound(Block.soundTypeStone)
+            		.setBlockName("OscRock")
+            		.setBlockTextureName("stone");            		            	
+      
+        	oscRock.setHarvestLevel("shovel", 0);                                 
+            
+            GameRegistry.registerBlock(	oscRock, oscRock.getUnlocalizedName().substring(5));
+
+                    	        	
         	
         }
 }
