@@ -6,6 +6,17 @@ Minecraft modded with osc output
 
 --- --- --- --- --- --- --- --- --- ---
 
+  v0.0.2 
+
+        - added 2 custom OSC blocks (dirt, stone) capable of outputting osc messages when created, hit or destroyed
+           => /osccraft/block/destroyed int32:178, int32:275, int32:70, int32:272, int32:272, int32:7
+           => /osccraft/block/placed float32:17, float32:278, float32:64, int32:292, int32:292
+           => /osccraft/block/hit int32:17, int32:278, int32:64, int32:3, int32:292, int32:292, int32:7
+
+        - removed duplicate block event occurances by checking for client-side only: if(!player.worldObj.isRemote)
+        - added custom OscCreativeTab for OSC blocks
+
+
   v0.0.1 (tag: "v0.0.1")
 
 	- initial release of osccraft
@@ -27,6 +38,10 @@ Minecraft modded with osc output
 	- To use multiple users on LAN with just 1 Minecraft Acct:
 	   => edit /Users/<your-user>/Library/Application Support/minecraft/versions/1.7.2-Forge10.12.2.1147/1.7.2-Forge10.12.2.1147.json
 	   => change "minecraftArguments" line: set "--username [custom-local-username] and "-uuid [custom-local-uuid]"
+
+  Compilation with Gradle:
+
+        - ./gradlew build
 
   Notes:
 
