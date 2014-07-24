@@ -6,7 +6,7 @@ Minecraft modded with osc output
 
 --- --- --- --- --- --- --- --- --- ---
 
-  v0.0.2 
+  v0.0.2 (tag: "v0.0.2")
 
         - added 2 custom OSC blocks (dirt, stone) capable of outputting osc messages when created, hit or destroyed
            => /osccraft/block/destroyed int32:178, int32:275, int32:70, int32:272, int32:272, int32:7
