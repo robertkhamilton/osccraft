@@ -25,7 +25,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 //import cpw.mods.fml.common.network.NetworkMod; // not used in 1.7
 
-@Mod(modid="OsccraftModID", name="Osccraft", version="0.0.1")
+@Mod(modid="OsccraftModID", name="Osccraft", version="0.0.2")
 //@NetworkMod(clientSideRequired=true) // not used in 1.7
 public class Osccraft {
 

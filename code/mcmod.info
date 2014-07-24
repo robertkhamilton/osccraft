@@ -1,0 +1,16 @@
+[
+{
+  "modid": "osccraft",
+  "name": "OSCCraft",
+  "description": "OSC-hooked events for Minecraft/Forge 1.7.2.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Rob Hamilton"],
+  "credits": "Rob Hamilton",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
