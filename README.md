@@ -6,6 +6,14 @@ Minecraft modded with osc output
 
 --- --- --- --- --- --- --- --- --- ---
 
+  v0.0.3 (tag: no tag)
+  
+        - Added new "OSCKeystone" block with (nearly) infinite Block.hardness and "ice" skin
+        - renamed OSCRock to OSCStone
+        - reset OSC parameters for block type to start with OSCDirt (1), OSCStone (2), OSCKeystone (3)
+        - no code update or tag for v0.0.3, just compiled mod .jar as v0.0.4 is coming right behind
+        
+        
   v0.0.2 (tag: "v0.0.2")
 
         - added 2 custom OSC blocks (dirt, stone) capable of outputting osc messages when created, hit or destroyed
