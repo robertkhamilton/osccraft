@@ -48,7 +48,7 @@ public class OscPlayerEventHandler {
 	{   	    		
 		EntityPlayer player = (EntityPlayer) theEvent.entity;
 		
-		if(!player.worldObj.isRemote) {     
+		//if(!player.worldObj.isRemote) {     
 		
 		    //if( Minecraft.getMinecraft().thePlayer.getUniqueID().compareTo(player.getUniqueID()) == 0)
 		    if(Minecraft.getMinecraft().thePlayer.getEntityId() == player.getEntityId())
@@ -68,7 +68,7 @@ public class OscPlayerEventHandler {
 		    }
 	    
 		    this.playerMessage.clear();
-		}
+		//}
 	}
 	
 	
@@ -78,7 +78,7 @@ public class OscPlayerEventHandler {
 	//PlayerInteractEvent(EntityPlayer player, Action action, int x, int y, int z, int face, World world))
 	{
 		if(theEvent.action == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK) {
-			sendOSCBlockHit(theEvent);
+			//sendOSCBlockHit(theEvent);
 		}
 	}
 	
@@ -112,11 +112,11 @@ public class OscPlayerEventHandler {
 	    
     			if(blockname.compareTo("air") == 0) {    		
     				blockType=0; // DESTROYED BLOCK: AIR    	    	
-    			} else if(blockname.compareTo("dirt") == 0) {    		    		
+    			} else if(blockname.compareTo("OscDirt") == 0) {    		    		
     				blockType=1; // DIRT
-    			} else if(blockname.compareTo("grass") == 0) {    		
+    			} else if(blockname.compareTo("OscStone") == 0) {    		
     				blockType=2; // GRASS
-    			} else if(blockname.compareTo("stone") == 0) {    		    		
+    			} else if(blockname.compareTo("OscKeystone") == 0) {    		    		
     				blockType=3; // STONE    		
     			} else if(blockname.compareTo("log") == 0) {    		    		
     				blockType=4; // LOG
@@ -172,11 +172,11 @@ public class OscPlayerEventHandler {
     	
     	if(blockname.compareTo("air") == 0) {    		
     		blockType=0; // DESTROYED BLOCK: AIR    	    	
-    	} else if(blockname.compareTo("dirt") == 0) {    		    		
+    	} else if(blockname.compareTo("OscDirt") == 0) {    		    		
     		blockType=1; // DIRT
-    	} else if(blockname.compareTo("grass") == 0) {    		
+    	} else if(blockname.compareTo("OscStone") == 0) {    		
     		blockType=2; // GRASS
-    	} else if(blockname.compareTo("stone") == 0) {    		    		
+    	} else if(blockname.compareTo("OscKeystone") == 0) {    		    		
     		blockType=3; // STONE    		
     	} else if(blockname.compareTo("log") == 0) {    		    		
     		blockType=4; // LOG

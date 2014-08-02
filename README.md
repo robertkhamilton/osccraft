@@ -5,6 +5,10 @@ Minecraft modded with osc output
 - implements Open Sound Control via OscP5
 
 --- --- --- --- --- --- --- --- --- ---
+  v0.0.4 (tag: "v0.0.4")
+   
+        - Networking updates to correctly pass events to non-server networked machines
+   
 
   v0.0.3 (tag: no tag)
   

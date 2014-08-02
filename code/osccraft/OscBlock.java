@@ -85,7 +85,7 @@ public class OscBlock extends Block
         	EntityPlayer player = p_149699_5_;
         	
         	// Client side check
-        	if(!player.worldObj.isRemote) {            	            
+        	//if(!player.worldObj.isRemote) {            	            
 
         		// only send to same client (ignore other client's block messages)
         		if(Minecraft.getMinecraft().thePlayer.getEntityId() == player.getEntityId()) {	
@@ -110,11 +110,11 @@ public class OscBlock extends Block
     	    
         			if(blockname.compareTo("air") == 0) {    		
         				blockType=0; // DESTROYED BLOCK: AIR    	    	
-        			} else if(blockname.compareTo("dirt") == 0) {    		    		
+        			} else if(blockname.compareTo("OscDirt") == 0) {    		    		
         				blockType=1; // DIRT
-        			} else if(blockname.compareTo("grass") == 0) {    		
+        			} else if(blockname.compareTo("OscStone") == 0) {    		
         				blockType=2; // GRASS
-        			} else if(blockname.compareTo("stone") == 0) {    		    		
+        			} else if(blockname.compareTo("OscKeystone") == 0) {    		    		
         				blockType=3; // STONE    		
         			} else if(blockname.compareTo("log") == 0) {    		    		
         				blockType=4; // LOG
@@ -132,7 +132,7 @@ public class OscBlock extends Block
         		}
         	
         		this.blockHitMessage.clear();    
-        	}
+        	//}
         	
         	
         	

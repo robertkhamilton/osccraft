@@ -25,7 +25,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 //import cpw.mods.fml.common.network.NetworkMod; // not used in 1.7
 
-@Mod(modid="OsccraftModID", name="Osccraft", version="0.0.2")
+@Mod(modid="OsccraftModID", name="Osccraft", version="0.0.4")
 //@NetworkMod(clientSideRequired=true) // not used in 1.7
 public class Osccraft {
 
@@ -34,8 +34,7 @@ public class Osccraft {
         public static Osccraft instance;
         
         // Custom OSC block class
-        public static Block oscDirt;
-        public static Block oscRock;
+        public static Block oscDirt, oscRock, oscKeystone;
         public static CreativeTabs tabOsccraft = new OscCreativeTabs("OSCCraft");
         
         // Says where the client and server 'proxy' code is loaded.
@@ -74,6 +73,7 @@ public class Osccraft {
         	
         	initBlockOscDirt();
         	initBlockOscRock();
+        	initBlockOscKeystone();
         	
         	proxy.registerRenderers();       
         }
@@ -89,25 +89,35 @@ public class Osccraft {
       
             oscDirt.setHarvestLevel("shovel", 0);                                 
             
-            GameRegistry.registerBlock(	oscDirt, oscDirt.getUnlocalizedName().substring(5));
-
-                    	
+            GameRegistry.registerBlock(	oscDirt, oscDirt.getUnlocalizedName().substring(5));                    	
         }
         
         private void initBlockOscRock()
         {
-        	// initialize osc-emitting "dirt" block
+        	// initialize osc-emitting "stone" block
         	oscRock = new OscBlock(Material.rock)
             		.setHardness(0.5F)
             		.setStepSound(Block.soundTypeStone)
-            		.setBlockName("OscRock")
+            		.setBlockName("OscStone")
             		.setBlockTextureName("stone");            		            	
       
         	oscRock.setHarvestLevel("shovel", 0);                                 
             
-            GameRegistry.registerBlock(	oscRock, oscRock.getUnlocalizedName().substring(5));
-
-                    	        	
-        	
+            GameRegistry.registerBlock(	oscRock, oscRock.getUnlocalizedName().substring(5));                    	        	        	
         }
+        
+        private void initBlockOscKeystone()
+        {
+        	// initialize osc-emitting "dirt" block
+            oscKeystone = new OscBlock(Material.ice)
+            		.setHardness(100.0F)
+            		.setStepSound(Block.soundTypeGravel)
+            		.setBlockName("OscKeystone")
+            		.setBlockTextureName("ice");            		            	
+      
+            oscKeystone.setHarvestLevel("shovel", 0);                                 
+            
+            GameRegistry.registerBlock(	oscKeystone, oscKeystone.getUnlocalizedName().substring(5));                    	
+        }
+                
 }
