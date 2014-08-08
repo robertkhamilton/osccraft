@@ -59,7 +59,7 @@ Minecraft modded with osc output
   
  	* On OS X machines, it is necessary to use a recent non-default version of the Java JDK to use OSC.
  	* Download Java 8 SDK at: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
-
+ 	* More info about determining your current Java version: http://docs.oracle.com/javase/7/docs/webnotes/install/mac/mac-jdk.html
 
   Notes:
 
