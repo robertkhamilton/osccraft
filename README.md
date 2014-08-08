@@ -55,6 +55,11 @@ Minecraft modded with osc output
 
         - ./gradlew build
 
+  Java:
+	* On OS X machines, it is necessary to use a recent non-default version of the Java JDK to use OSC.
+	* Download Java 8 SDK at: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+
+
   Notes:
 
 	* In Minecraft Launcher > profile it was necessary to manually set the Java version (on OS X) to make OSC/UDP output work
