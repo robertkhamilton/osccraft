@@ -46,6 +46,9 @@ Minecraft modded with osc output
 
 	- install Minecraft, eclipse, recent JDK
 	- install Forge 1.7.2 (release 1.7.2-Forge10.12.2.1147)
+	   => gradlew setupDecompWorkspace --refresh-dependencies --debug
+	   => gradlew setupDevWorkspace --refresh-dependencies --debug
+	   => gradlew eclipse --debug
 	- Create Minecraft profile in Launcher pointing to "release 1.7.2-Forge10.12.2.1147"	
 	- To use multiple users on LAN with just 1 Minecraft Acct:
 	   => edit /Users/<your-user>/Library/Application Support/minecraft/versions/1.7.2-Forge10.12.2.1147/1.7.2-Forge10.12.2.1147.json
