@@ -1,10 +1,19 @@
 package osccraft;
 
+import oscP5.OscEventListener;
+import oscP5.OscMessage;
+import oscP5.OscP5;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.management.ServerConfigurationManager;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -25,10 +34,15 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 //import cpw.mods.fml.common.network.NetworkMod; // not used in 1.7
 
-@Mod(modid="OsccraftModID", name="Osccraft", version="0.0.4")
+@Mod(modid="OsccraftModID", name="Osccraft", version="0.0.5")
 //@NetworkMod(clientSideRequired=true) // not used in 1.7
 public class Osccraft {
 
+		final OscP5 thisOscP5= new OscP5((Object)this, 6667);	
+		public World myWorld;
+		
+		
+		
         // The instance of your mod that Forge uses.
         @Instance(value = "OsccraftModID")
         public static Osccraft instance;
@@ -47,7 +61,7 @@ public class Osccraft {
 
         	// init custom blocks for this mod
         	this.initBlocks();
-        	
+        	     
         }
         
         @EventHandler // used in 1.6.2
@@ -68,9 +82,82 @@ public class Osccraft {
         	
         }
         
+
+        /* incoming osc message are forwarded to the oscEvent method. */
+        void oscEvent(OscMessage theOscMessage) {
+          /* print the address pattern and the typetag of the received OscMessage */
+        	System.out.println("### received an osc message: ");
+        	//System.out.println(" addrpattern: "+theOscMessage.addrPattern());
+        	//System.out.println(" typetag: "+theOscMessage.typetag());
+        	//theOscMessage.print();
+        	
+        	//if(theOscMessage.checkAddrPattern("/osccraft/block/create")==true) {
+        	//	addBlock(theOscMessage);
+        	//} else {
+        	//	
+        	//}
+        	
+        	switch (theOscMessage.addrPattern()) {
+        	
+        		case "/osccraft/block/add":
+        			addBlock(theOscMessage);
+        			break;
+        		case "/osccraft/block/remove":
+        			removeBlock(theOscMessage);
+        			break;
+        		
+        	}
+        	        	
+        	//System.out.print(myWorld.playerEntities.get(0).toString() );        	
+        }
+        
+        
+        // Add block of specified type at OSC coordinates
+        private void addBlock(OscMessage theOscMessage)
+        {
+        	System.out.print("osccraft message received");
+    		System.out.println(" addrpattern: "+theOscMessage.addrPattern());
+        	System.out.println(" typetag: "+theOscMessage.typetag());
+        	System.out.println(" length: "+theOscMessage.arguments().length);
+        
+        	// gets client world only
+        	myWorld = Minecraft.getMinecraft().theWorld;
+        	            	            	
+        	// Get all arguments
+        	for (int i=0; i < theOscMessage.arguments().length; i++) {
+        		
+        		System.out.println("Argument " + i + ": " + theOscMessage.get(i).intValue() );    
+        		
+        		// Create block at xyz coordinates of specified type
+        		Block thisBlock;
+        		String blockType = theOscMessage.get(3).stringValue();
+        		
+        		switch (blockType) {
+        			case "oscDirt": 	
+        				thisBlock = oscDirt;
+        				break;
+        			case "oscRock": 
+        				thisBlock = oscRock;
+        				break;
+        			case "oscKeystone": 
+        				thisBlock = oscKeystone;
+        				break;
+        			default: 
+        				thisBlock = Blocks.melon_block;
+        				break;            		
+        		}
+        		
+        		myWorld.setBlock(theOscMessage.get(0).intValue(), theOscMessage.get(1).intValue(), theOscMessage.get(2).intValue(), thisBlock);            		
+        	}        	
+        }
+        
+        // Remove block at OSC coordinates
+        private void removeBlock(OscMessage theOscMessage) {        	
+        	myWorld.setBlockToAir(theOscMessage.get(0).intValue(), theOscMessage.get(1).intValue(), theOscMessage.get(2).intValue());        
+        }
+        
         private void initBlocks()
         {
-        	
         	initBlockOscDirt();
         	initBlockOscRock();
         	initBlockOscKeystone();

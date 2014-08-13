@@ -1,5 +1,6 @@
 package osccraft;
 
+import oscP5.OscEventListener;
 import oscP5.OscMessage;
 import oscP5.OscP5;
 import oscP5.OscProperties;
@@ -21,7 +22,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class OscPlayerEventHandler {
 	
-	final OscP5 thisOscP5= new OscP5((Object)this, 7000);	
+	final OscP5 thisOscP5= new OscP5((Object)this, 7000);
+	final OscP5 thisOscP5Listener= new OscP5((Object)this, 6667);
 	NetAddress playerRemoteLocation = new NetAddress("localhost",6666);
 	NetAddress blockHitRemoteLocation = new NetAddress("127.0.0.1",6666);	
 	NetAddress blockDestroyedRemoteLocation = new NetAddress("127.0.0.1",6666);
@@ -32,6 +34,7 @@ public class OscPlayerEventHandler {
 	OscMessage clickMessage = new OscMessage("/osccraft/click");
 	//UUID myUUID = Minecraft.getMinecraft().thePlayer.getUniqueID();	
 	
+    	
 	@SubscribeEvent
 	//@SideOnly(Side.CLIENT)
 	public void onLivingUpdateEvent(LivingUpdateEvent theEvent)
@@ -198,5 +201,6 @@ public class OscPlayerEventHandler {
     	
     	this.blockDestroyedMessage.clear();    	
     }
+    
 
 }
