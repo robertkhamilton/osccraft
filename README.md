@@ -5,6 +5,14 @@ Minecraft modded with osc output
 - implements Open Sound Control via OscP5
 
 --- --- --- --- --- --- --- --- --- ---
+  v0.0.5 (tag: "v0.0.5")
+        
+        - Added initial OSC input for creating and removing blocks
+	   => /osccraft/block/add (x,y,z,block_type) iiis
+           => /osccraft/block/remove (x,y,z) iii
+        - Upgraded to Forge 1.7.10
+           => force Java 7 in update build.gradle
+        
   v0.0.4 (tag: "v0.0.4")
    
         - Networking updates to correctly pass events to non-server networked machines
