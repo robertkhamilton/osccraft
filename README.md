@@ -5,6 +5,10 @@ Minecraft modded with osc output
 - implements Open Sound Control via OscP5
 
 --- --- --- --- --- --- --- --- --- ---
+  v0.0.6 (tag: "v0.0.6")
+  
+  		- Added mod config file and Gui for Target IP Address, Target Port and Input Port
+		
   v0.0.5 (tag: "v0.0.5")
         
         - Added initial OSC input for creating and removing blocks

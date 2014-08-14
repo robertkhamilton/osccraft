@@ -12,10 +12,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.management.ServerConfigurationManager;
+import net.minecraft.world.IWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -34,17 +36,28 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 //import cpw.mods.fml.common.network.NetworkMod; // not used in 1.7
 
-@Mod(modid="OsccraftModID", name="Osccraft", version="0.0.5")
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.common.config.Configuration;
+
+@Mod(modid="Osccraft", name="Osccraft", version="0.0.6", guiFactory = "osccraft.OscGuiFactory")
 //@NetworkMod(clientSideRequired=true) // not used in 1.7
 public class Osccraft {
-
-		final OscP5 thisOscP5= new OscP5((Object)this, 6667);	
+	
+		final OscP5 thisOscP5= new OscP5((Object)this, osccraft.Osccraft.configInPort);	
 		public World myWorld;
+		public IWorldAccess myIWorld;
 		
-		
+		// Configuration file variables
+		public static Configuration configFile;	
+		//public static int myConfigInteger = 32;
+		//public static String myConfigString = "Hello!";
+		//public static boolean myConfigBool = false;						
+		public static String configIpAddress = "127.0.0.1";
+		public static int configOutPort = 6666;
+		public static int configInPort = 6667;
 		
         // The instance of your mod that Forge uses.
-        @Instance(value = "OsccraftModID")
+        @Instance(value = "Osccraft")
         public static Osccraft instance;
         
         // Custom OSC block class
@@ -61,15 +74,41 @@ public class Osccraft {
 
         	// init custom blocks for this mod
         	this.initBlocks();
-        	     
+        	
+        	configFile = new Configuration(event.getSuggestedConfigurationFile());
+        	 
+            syncConfig();
+                	        	     
+        }
+        
+        public static void syncConfig() {
+            //myConfigInteger = configFile.getInt("My Config Integer", Configuration.CATEGORY_GENERAL, myConfigInteger, 0, Integer.MAX_VALUE, "An Integer!");
+            //myConfigString = configFile.getString("My Config String", Configuration.CATEGORY_GENERAL, myConfigString, "A String!");
+            //myConfigBool = configFile.getBoolean("My Config Bool", Configuration.CATEGORY_GENERAL, myConfigBool, "A Boolean!");
+            
+            configIpAddress = configFile.getString("Target IP", Configuration.CATEGORY_GENERAL, configIpAddress, "Target IP");
+            configOutPort = configFile.getInt("Target Port (output)", Configuration.CATEGORY_GENERAL, configOutPort, 0, 65535, "Target Port (output)");
+            configInPort = configFile.getInt("Receive Port (input)", Configuration.CATEGORY_GENERAL, configInPort, 0, 65535, "Receive Port (input)");
+            
+            if(configFile.hasChanged())
+                configFile.save();
         }
         
         @EventHandler // used in 1.6.2
         //@Init       // used in 1.5.2
         public void load(FMLInitializationEvent event) {
-                proxy.registerRenderers();
+        	proxy.registerRenderers();
+        	
+        	// Configuration file: register changes
+        	FMLCommonHandler.instance().bus().register(instance);                
         }
         
+        @SubscribeEvent
+        public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
+        	if(eventArgs.modID.equals("Osccraft"))
+        		syncConfig();
+        }
+
         @EventHandler // used in 1.6.2
         //@PostInit   // used in 1.5.2
         public void postInit(FMLPostInitializationEvent event) {
@@ -89,7 +128,7 @@ public class Osccraft {
         	System.out.println("### received an osc message: ");
         	//System.out.println(" addrpattern: "+theOscMessage.addrPattern());
         	//System.out.println(" typetag: "+theOscMessage.typetag());
-        	//theOscMessage.print();
+        	theOscMessage.print();
         	
         	//if(theOscMessage.checkAddrPattern("/osccraft/block/create")==true) {
         	//	addBlock(theOscMessage);
@@ -105,13 +144,62 @@ public class Osccraft {
         		case "/osccraft/block/remove":
         			removeBlock(theOscMessage);
         			break;
-        		
+        		case "/osccraft/block/opacity":			// not working
+        			setBlockOpacity(theOscMessage);
+        			break;
+        		case "/osccraft/block/light":			// not working
+        			setBlockLight(theOscMessage);
+        			break;        		
         	}
         	        	
         	//System.out.print(myWorld.playerEntities.get(0).toString() );        	
         }
         
+        private void setBlockOpacity(OscMessage theOscMessage){
+
+        	int opacity, x, y, z;
+        	
+        	opacity = theOscMessage.get(0).intValue();
+        	x = theOscMessage.get(1).intValue();
+        	y = theOscMessage.get(2).intValue();
+        	z = theOscMessage.get(3).intValue();
+        	
+        	Block block = myWorld.getBlock(x, y, z);
+        	
+        	block.setLightOpacity(opacity);        
+        	Minecraft.getMinecraft().renderGlobal.markBlockForUpdate(x, y, z);
+        	myWorld.markBlockForUpdate(x, y, z);
+        	//myIWorld.markBlockForRenderUpdate(x,y,z);
+        	//myWorld.markBlockRangeForRenderUpdate(x,y,z,x,y,z);
+        }
         
+        private void setBlockLight(OscMessage theOscMessage){
+
+        	float level;
+        	int x, y, z;
+        	
+        	level = theOscMessage.get(0).floatValue();
+        	x = theOscMessage.get(1).intValue();
+        	y = theOscMessage.get(2).intValue();
+        	z = theOscMessage.get(3).intValue();
+        	
+        	//Block block = myWorld.getBlock(x, y, z);
+        	
+        	//block.setLightLevel(level);
+        	
+        	
+        	myWorld.getBlock(x, y, z).setLightLevel(level);
+        	
+        	            
+        	Minecraft.getMinecraft().renderGlobal.markBlockForUpdate(x, y, z);
+        	myWorld.markBlockForUpdate(x, y, z);
+        	//myIWorld.markBlockForRenderUpdate(x, y, z);
+        	//myWorld.markBlockRangeForRenderUpdate(x,y,z,x,y,z);
+        	
+        	//myWorld.getBlock(x, y, z).UpdateTick()
+        	//myWorld.updateAllLightTypes(x, y, z);
+        	
+        }        
         // Add block of specified type at OSC coordinates
         private void addBlock(OscMessage theOscMessage)
         {

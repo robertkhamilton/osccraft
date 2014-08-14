@@ -17,15 +17,15 @@ import netP5.NetAddress;
 public class OscBlock extends Block 
 {
 	final OscP5 thisOscP5= new OscP5((Object)this, 7000);		
-	NetAddress blockPlacedRemoteLocation = new NetAddress("127.0.0.1",6666);
-	NetAddress blockWalkingRemoteLocation = new NetAddress("127.0.0.1",6666);	        
-	NetAddress blockDestroyedRemoteLocation = new NetAddress("127.0.0.1",6666);	
+	NetAddress blockPlacedRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);
+	NetAddress blockWalkingRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);	        
+	NetAddress blockDestroyedRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);	
 	OscMessage blockPlacedMessage = new OscMessage("/osccraft/block/placed");
 	OscMessage blockWalkingMessage = new OscMessage("/osccraft/block/walking");
 	OscMessage blockDestroyedMessage = new OscMessage("/osccraft/block/destroyed");
 
 	OscMessage blockHitMessage = new OscMessage("/osccraft/block/hit");
-	NetAddress blockHitRemoteLocation = new NetAddress("127.0.0.1",6666);
+	NetAddress blockHitRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);
 	
 	// set block to be updated on next tick
 	Boolean updateNow;	
@@ -36,6 +36,8 @@ public class OscBlock extends Block
                 
                 // set custom creative tab
                 this.setCreativeTab(Osccraft.tabOsccraft);
+                
+                System.out.println("************** NEW BLOCK");
         }
         
         /**
@@ -54,7 +56,7 @@ public class OscBlock extends Block
 	    		if(Minecraft.getMinecraft().thePlayer.getEntityId() == player.getEntityId()) {	
 
 	    			this.blockPlacedMessage.setAddrPattern("/osccraft/block/placed");
-	    			this.blockPlacedRemoteLocation = new NetAddress("localhost",6666);
+	    			this.blockPlacedRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);
 	    			this.blockPlacedMessage.add((float)p_149689_2_);
 	    			this.blockPlacedMessage.add((float)p_149689_4_);
 	    			this.blockPlacedMessage.add((float)p_149689_3_);	    	
@@ -100,7 +102,7 @@ public class OscBlock extends Block
         	
         			int blockType;
         			this.blockHitMessage.setAddrPattern("/osccraft/block/hit");
-        			this.blockHitRemoteLocation = new NetAddress("127.0.0.1",6666);
+        			this.blockHitRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);
         			this.blockHitMessage.add(blockX);
         			this.blockHitMessage.add(blockZ);
         			this.blockHitMessage.add(blockY);
@@ -162,7 +164,7 @@ public class OscBlock extends Block
     			EntityPlayer player = (EntityPlayer)p_149724_5_;
     			
     			this.blockWalkingMessage.setAddrPattern("/osccraft/block/walking");
-    			this.blockWalkingRemoteLocation = new NetAddress("localhost",6666);
+    			this.blockWalkingRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);
     			this.blockWalkingMessage.add((float)p_149724_2_);
     			this.blockWalkingMessage.add((float)p_149724_4_);
     			this.blockWalkingMessage.add((float)p_149724_3_);	    	
@@ -178,6 +180,12 @@ public class OscBlock extends Block
     			this.blockWalkingMessage.clear();   
     		}
     		
+        }
+        
+        // Test for block being added by OSC
+        public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_) {
+        	System.out.print("BLOCK WAS ADDED");
+        	
         }
         
 	    public int tickRate(World p_149738_1_)

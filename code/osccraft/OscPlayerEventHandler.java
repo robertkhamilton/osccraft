@@ -23,11 +23,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class OscPlayerEventHandler {
 	
 	final OscP5 thisOscP5= new OscP5((Object)this, 7000);
-	final OscP5 thisOscP5Listener= new OscP5((Object)this, 6667);
-	NetAddress playerRemoteLocation = new NetAddress("localhost",6666);
-	NetAddress blockHitRemoteLocation = new NetAddress("127.0.0.1",6666);	
-	NetAddress blockDestroyedRemoteLocation = new NetAddress("127.0.0.1",6666);
-	NetAddress clickRemoteLocation = new NetAddress("localhost",6666);	
+	final OscP5 thisOscP5Listener= new OscP5((Object)this, osccraft.Osccraft.configInPort);
+	NetAddress playerRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);
+	NetAddress blockHitRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);	
+	NetAddress blockDestroyedRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);
+	NetAddress clickRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);	
 	OscMessage playerMessage = new OscMessage("/osccraft/player");
 	OscMessage blockHitMessage = new OscMessage("/osccraft/block/hit");
 	OscMessage blockDestroyedMessage = new OscMessage("/osccraft/block/destroyed");
@@ -58,7 +58,7 @@ public class OscPlayerEventHandler {
 		    {	    
 
 		    	this.playerMessage.setAddrPattern("/osccraft/player");
-		    	this.playerRemoteLocation = new NetAddress("localhost",6666);
+		    	this.playerRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);
 		    	this.playerMessage.add((float)player.posX);
 		    	this.playerMessage.add((float)player.posZ);
 		    	this.playerMessage.add((float)player.posY);	    	
@@ -105,7 +105,7 @@ public class OscPlayerEventHandler {
     	
     			int blockType;
     			this.blockHitMessage.setAddrPattern("/osccraft/block/hit");
-    			this.blockHitRemoteLocation = new NetAddress("127.0.0.1",6666);
+    			this.blockHitRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);
     			this.blockHitMessage.add(blockX);
     			this.blockHitMessage.add(blockZ);
     			this.blockHitMessage.add(blockY);
@@ -164,7 +164,7 @@ public class OscPlayerEventHandler {
     	
     	int blockType;
     	this.blockDestroyedMessage.setAddrPattern("/osccraft/block/destroyed");
-    	this.blockDestroyedRemoteLocation = new NetAddress("127.0.0.1",6666);
+    	this.blockDestroyedRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);
     	this.blockDestroyedMessage.add(blockX);
     	this.blockDestroyedMessage.add(blockZ);
     	this.blockDestroyedMessage.add(blockY);
