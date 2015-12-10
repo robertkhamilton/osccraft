@@ -5,6 +5,9 @@ Minecraft modded with osc output
 - implements Open Sound Control via OscP5
 
 --- --- --- --- --- --- --- --- --- ---
+  v0.0.7
+  		- Updated for Minecraft 1.8
+		
   v0.0.6 (tag: "v0.0.6")
   
   		- Added mod config file and Gui for Target IP Address, Target Port and Input Port
