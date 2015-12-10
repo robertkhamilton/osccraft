@@ -2,9 +2,9 @@
 {
   "modid": "Osccraft",
   "name": "Osccraft",
-  "description": "Osccraft implements OSC-hooked events for Minecraft within the Minecraft Forge 1.7.10 framework. Using the oscP5 library, Minecraft player and block events output OSC values while OSC input is hooked to create blocks.",
-  "version": "v0.0.6",
-  "mcversion": "1.7.10",
+  "description": "Osccraft implements OSC-hooked events for Minecraft within the Minecraft Forge 1.8 framework. Using the oscP5 library, Minecraft player and block events output OSC values while OSC input is hooked to create blocks.",
+  "version": "v0.0.7",
+  "mcversion": "1.8",
   "url": "github.com/robertkhamilton/osccraft",
   "updateUrl": "",
   "authorList": ["Rob Hamilton"],

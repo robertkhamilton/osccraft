@@ -12,13 +12,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import netP5.NetAddress;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
+//import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import osccraft.Osccraft;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+//import cpw.mods.fml.relauncher.Side;
+//import cpw.mods.fml.relauncher.SideOnly;
 
 public class OscPlayerEventHandler {
 	
@@ -81,7 +84,7 @@ public class OscPlayerEventHandler {
 	//PlayerInteractEvent(EntityPlayer player, Action action, int x, int y, int z, int face, World world))
 	{
 		if(theEvent.action == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK) {
-			//sendOSCBlockHit(theEvent);
+			sendOSCBlockHit(theEvent);
 		}
 	}
 	
@@ -95,14 +98,17 @@ public class OscPlayerEventHandler {
     		// only sed to same client (ignore other client's block messages)
     		if(Minecraft.getMinecraft().thePlayer.getEntityId() == player.getEntityId()) {	
 
-    			int blockX = theEvent.x;
-    			int blockY = theEvent.y;
-    			int blockZ = theEvent.z;
-    			int face = theEvent.face;    	
+    			int blockX = theEvent.pos.getX();
+    			int blockY = theEvent.pos.getY();
+    			int blockZ = theEvent.pos.getZ();
+    			int face = theEvent.face.getIndex();  // D-U-N-S-W-E  	
     			            
     			// trim "tile." from blockName
-    			String blockname = theEvent.world.getBlock(blockX, blockY, blockZ).getUnlocalizedName().substring(5);
-    	
+    			//String blockname = theEvent.world.getBlock(blockX, blockY, blockZ).getUnlocalizedName().substring(5);
+    			
+    			BlockPos location = new BlockPos(blockX, blockY, blockZ);    			
+    			String blockname = theEvent.world.getBlockState(location).getBlock().getUnlocalizedName().substring(5);
+    					
     			int blockType;
     			this.blockHitMessage.setAddrPattern("/osccraft/block/hit");
     			this.blockHitRemoteLocation = new NetAddress(osccraft.Osccraft.configIpAddress,osccraft.Osccraft.configOutPort);
@@ -153,14 +159,20 @@ public class OscPlayerEventHandler {
     public void sendOSCBlockDestroyed(BreakEvent theEvent)
     //int blockX, int blockZ, int blockY, int sideHit, EntityPlayer player)
     {
-    	int blockX = theEvent.x;
-    	int blockY = theEvent.y;
-    	int blockZ = theEvent.z;
+//    	int blockX = theEvent.x;
+//    	int blockY = theEvent.y;
+//    	int blockZ = theEvent.z;
+		int blockX = theEvent.pos.getX();
+		int blockY = theEvent.pos.getY();
+		int blockZ = theEvent.pos.getZ();
     	
     	EntityPlayer player = (EntityPlayer) theEvent.getPlayer();
     	
     	// trim "tile." from blockName
-    	String blockname = theEvent.block.getUnlocalizedName().substring(5); 
+//    	String blockname = theEvent.block.getUnlocalizedName().substring(5); 
+    	
+		BlockPos location = new BlockPos(blockX, blockY, blockZ);    			
+		String blockname = theEvent.world.getBlockState(location).getBlock().getUnlocalizedName().substring(5);
     	
     	int blockType;
     	this.blockDestroyedMessage.setAddrPattern("/osccraft/block/destroyed");

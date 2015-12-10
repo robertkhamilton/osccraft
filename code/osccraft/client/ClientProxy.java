@@ -1,7 +1,7 @@
 package osccraft.client;
 
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+//import cpw.mods.fml.common.Mod.EventHandler;					//removed for 1.8
+//import cpw.mods.fml.common.event.FMLPostInitializationEvent;  //removed for 1.8
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import osccraft.CommonProxy;
