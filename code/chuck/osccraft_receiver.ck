@@ -1,5 +1,6 @@
 /*
-*. OscCraft (make a class)
+*. OscCraft (Minecraft 1.8 / Forge 11.14.4.1563)
+*  ---------------------------------------------
 *
 *  SWITCH MODES creative/survival
 *  /gamemode c/s
