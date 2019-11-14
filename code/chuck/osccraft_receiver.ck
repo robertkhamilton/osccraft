@@ -6,8 +6,18 @@
 *  /gamemode c/s
 *
 * DATA EXAMPLES
-* /osccraft/block/hit -239 -169 64 1 9290 9290 3 
+*
+* /osccraft/player <x> <y> <z> <pitch> <yaw> <playerid> <serverid> 
+*    (float x, y, z, pitch, yaw; int playerid, serverid)
+*
+* /osccraft/block/placed 114 230 63 11174 11174
+*    (int x, y, z, playerid, serverid)
+*
 * /osccraft/block/destroyed -239 -169 64 9290 9290 3 
+*    (int x, y, z, playerid, serverid, blockType)
+*
+* /osccraft/block/hit -239 -169 64 1 9290 9290 3 
+*.   (int x, y, z, face, playerid, serverid, blockType)
 *
 */
 
@@ -81,7 +91,7 @@ Audio audio;  // all audio processing in Audio class
 1 => int debug_placed;
 1 => int debug_destroyed;
 1 => int debug_hit;
-0 => int debug_position;
+1 => int debug_position;
 
 Block blocks_placed[0];
 
@@ -236,7 +246,7 @@ fun void receive_player_position()
     OscMsg msg;
     receive_port => oin.port;        
     oin.addAddress( "/osccraft/player, f f f f f i i" );
-    
+        
     float x, y, z, pitch, yaw; 
     int playerid, serverid, blockType;
     time destroyedTime;
